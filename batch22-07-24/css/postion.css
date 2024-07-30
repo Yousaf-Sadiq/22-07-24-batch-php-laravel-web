@@ -1,0 +1,111 @@
+/* 
+1 static (default)
+2 relative
+3 absolute
+4. fixed 
+5. sticky 
+
+*/
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 1000vh;
+}
+.position-relative {
+  /* 
+  width: 50%;
+  height: 300px; */
+  border: 1px solid blueviolet;
+  position: sticky;
+  top: 0px;
+
+  /* right: 50px;
+  bottom: 15px; */
+}
+
+/* 
+relative
+1. sorrounding check 
+2. maintain behaviour 
+3. responsive on each device
+
+absolute 
+1. does not check sourrounding 
+2. does not maintain behaviour 
+3. it is not a responsive property 
+
+
+
+
+*/
+
+.box {
+  text-align: center;
+}
+/*  child selector  */
+.box > div {
+  display: inline-block;
+
+  width: 300px;
+  height: 300px;
+  border: 1px solid rebeccapurple;
+}
+.box > div:nth-child(1) {
+  background-color: black;
+}
+
+.box > div:nth-child(2) {
+  background-color: red;
+  position: relative;
+  top: 50px;
+  left: 100px;
+  /* z-index: -1; */
+}
+
+.box > div:nth-child(3) {
+  background-color: royalblue;
+}
+/* .box ~ .position-relative {
+  background-color: black;
+  color: white;
+} */
+.card {
+  width: 33%;
+  /* position: relative; */
+}
+.card-head{
+ position: relative;
+}
+.badge {
+  color: whitesmoke;
+  background-color: black;
+  padding: 0.5rem;
+  display: block;
+  border-radius: 50px;
+  width: 10%;
+  text-align: center;
+  position: absolute;
+  top: 0px;
+}
+
+/* form{
+ background-color: #222;
+} */
+.form-control{
+ border: none;
+ outline: none;
+ background-color: transparent;
+ color: rebeccapurple;
+
+}
+
+.form-control:focus{
+ border-bottom: 4px solid rebeccapurple;
+}
+::placeholder{
+ color: royalblue;
+}
