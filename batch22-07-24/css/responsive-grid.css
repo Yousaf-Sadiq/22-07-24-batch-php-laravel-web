@@ -1,0 +1,48 @@
+/* 
+max-width 
+min-width
+
+*/
+
+/* @media only screen and (min-width: 300px) and (max-width: 600px) {
+  .child {
+    background-color: royalblue;
+  }
+} */
+
+/* // X-Small devices (portrait phones, less than 576px)
+// No media query for `xs` since this is the default in Bootstrap */
+
+/* // Small devices (landscape phones, 576px and up) */
+@media (max-width: 576px) {
+  .container {
+    grid-template-areas:
+      "header header header   header header"
+      "menu   menu   menu     menu    menu"
+      "hero   hero   hero     hero    hero "
+      "main   main   main     main    main "
+      "banner  banner  banner   banner   banner "
+      "extra   extra    extra   extra    extra"
+      "image   image    image   image    image" ;
+  }
+  .item4 {
+    margin: 0;
+    padding: 4rem;
+  }
+}
+
+/* // Medium devices (tablets, 768px and up) */
+@media only screen and (min-width: 577px) and (max-width: 768px) {
+  .container {
+    grid-template-areas:
+      "header header header   header header"
+      "hero   hero   hero   hero hero "
+      "menu   menu  main   main   main "
+      "menu   menu  banner   banner   banner "
+      "menu   menu  extra extra  image";
+  }
+  .item4 {
+    margin: 0;
+    padding: 4rem;
+  }
+}

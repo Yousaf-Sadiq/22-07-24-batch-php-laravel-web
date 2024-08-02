@@ -1,0 +1,85 @@
+.container {
+  display: grid;
+  /* background-color: bisque; */
+
+  grid-template-areas:
+    "header header menu   menu menu"
+    "hero   hero   hero   hero hero "
+    "main   main   main   image image "
+    "main   main   main   extra extra "
+    "banner   banner   banner   banner banner ";
+}
+
+.child {
+  padding: 1rem;
+  border: 1px solid black;
+
+  color: white;
+  font-weight: bold;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+}
+
+.item1 {
+  grid-area: header;
+  background-color: #0f1629;
+}
+.item2 {
+  grid-area: menu;
+
+  background-color: #f03c4e;
+}
+.item3 {
+  grid-area: hero;
+  background-color: #4c86c6;
+  padding: 7rem;
+}
+.item4 {
+  grid-area: main;
+  background-color: #24344b;
+  margin-right: 13rem;
+}
+.item5 {
+  grid-area: image;
+  background-color: #c1e4e6;
+}
+.item6 {
+  grid-area: extra;
+  background-color: #4dbd97;
+}
+.item7 {
+  grid-area: banner;
+  background-color: #fed269;
+  color: black;
+}
+
+.hamburger {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.hamburger > div {
+  background-color: #0f1629;
+  height: 3px;
+  width: 50px;
+  margin-bottom: 7px;
+  transition: all 0.75s ease-in-out;
+}
+
+.hamburger:hover > div:nth-child(1) {
+  transform: rotate(45deg);
+}
+
+.hamburger:hover > div:nth-child(2) {
+  display: none;
+}
+
+.hamburger:hover > div:nth-child(3) {
+  transform: translate(-5px, -5px) rotate(-45deg);
+}
