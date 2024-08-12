@@ -121,3 +121,70 @@ if (y == z) {
 // } else {
 //   console.log("abc");
 // }
+
+let month=2;
+
+// if (((month == 12 ) || (month == 1 )) || month == 2) {
+if (month <= 2 && month >=12) {
+  
+}
+
+//  ysk9681@gmail.com
+
+
+// arrow funciton  
+
+
+
+// anonymous function 
+
+let abc= (function(a,b){
+
+})
+
+
+abc()
+
+
+
+
+
+
+function name(){
+
+}
+
+
+
+(function(){
+
+})()
+
+// qwer()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(()=>{
+
+})()
+
+
+
+
+
+
+
