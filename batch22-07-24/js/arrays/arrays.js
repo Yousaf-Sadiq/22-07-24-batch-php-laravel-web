@@ -96,6 +96,8 @@ let newArr = a.slice(0, a_length2);
 // let t = [1, 2, 3, 4, 5, 6, 7, 8, 9, ["Hello", "world"]];
 let t = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
+// console.log(typeof t)
+
 let t_length = t.length;
 
 let r_index = t_length - 1;
@@ -145,8 +147,6 @@ console.log(t);
 let html = "";
 
 for (let row = 1; row <= 7; row++) {
- 
- 
   for (let col = 1; col <= row; col++) {
     html += "*";
   }
@@ -155,3 +155,109 @@ for (let row = 1; row <= 7; row++) {
 }
 
 h3.innerHTML = html;
+
+// let obj = {
+//   "name": "XYZ",
+//   "address":
+// };
+//  [1,2,4,]
+let obj = [
+  {
+    name: "XYZ1",
+    address: "abcAdderss",
+    class: "XYZCLass",
+    abc: function () {
+      console.log("function called");
+    },
+  },
+  {
+    name: "XYZ2",
+    address: "abcAdderss",
+    class: "XYZCLass",
+  },
+  {
+    name: "XYZ3",
+    address: "abcAdderss",
+    class: "XYZCLass",
+  },
+  {
+    name: "XYZ4",
+    address: "abcAdderss",
+    class: "XYZCLass",
+    abc: function () {
+      console.log("function called");
+    },
+  },
+];
+
+console.log(obj[0].abc());
+
+// Sum all the array elements by using a loop.
+
+// Make a reverse of the array by using a loop.
+
+// Find the largest number in an array by using a loop.
+// Find the smallest number in an array by using a loop.
+// Write a function that checks if a word is a palindrome (reads the same forwards and backward).
+// Write a function to calculate the factorial of a given number.
+
+// Write a function that determines whether a given number is prime or not.
+
+// Print numbers from 1 to 100,
+// but for multiples of 3 print "Fizz",
+// for multiples of 5, print "Buzz"
+// and for numbers that are multiples of both 3 and 5 print "FizzBuzz".
+
+//  10!=> 1x 2 x 3 x 4 x 5
+
+// MAM
+function FindSum(arr) {
+  if (typeof arr == "object") {
+    let arr_length = arr.length;
+
+    let total = 0;
+
+    for (let i = 0; i < arr_length; i++) {
+      // a =a +1;
+      // total = total + arr[i];
+      total += arr[i];
+    }
+
+    return total;
+  } else {
+    return false;
+  }
+}
+
+t = 9;
+
+if (FindSum(t) == false) {
+  console.log("variable is not supportable");
+} else {
+  console.log(FindSum(t));
+}
+
+let u = [1, 2, 8998989, 9999999777, 9999 ];
+
+
+
+for (let select = 0; select < u.length; select++) {
+  let greater = true;
+
+  for (let check = 0; check < u.length; check++) {
+    if (select != check) {
+      if (u[select] < u[check]) {
+        greater = false;
+        break;
+      }
+    }
+  }
+
+
+  if(greater == true){
+
+    console.log(u[select])
+  }
+
+
+}
