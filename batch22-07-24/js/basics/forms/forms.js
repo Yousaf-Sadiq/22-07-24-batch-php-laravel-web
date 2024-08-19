@@ -49,9 +49,27 @@ function remove() {
   // "name":"dsnakl"
   // }
 
+
+// let a = [1,2,4,5,6,7];
+
+// for (let j = 0; j < a.length; j++) {
+  
+//   console.log(a[j])
+  
+// }
+
+
+
   for (let i = 0; i < btn_remove.length; i++) {
+
+
     btn_remove[i].addEventListener("click", function () {
+      
+      
+      
       let parent = btn_remove[i].parentElement;
+
+
 
       parent.style.backgroundColor = "red";
       parent.style.color = "white";
@@ -67,6 +85,10 @@ function remove() {
        }, 1000);
 
       }, 1000);
+
+
+
+      
     });
   }
 
