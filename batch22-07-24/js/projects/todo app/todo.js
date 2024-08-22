@@ -142,7 +142,7 @@ function lineThrough() {
      addLine[index].onclick = () => {
          let currentSpanTag = addLine[index];
          currentSpanTag.classList.toggle("LineThrough");
-         SaveItem();
+         saveItem();
      };
  }
 

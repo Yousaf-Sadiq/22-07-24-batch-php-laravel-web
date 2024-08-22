@@ -1,0 +1,60 @@
+* {
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+header {
+  background-color: rebeccapurple;
+  padding: 1rem;
+  color: whitesmoke;
+}
+header > nav {
+  color: whitesmoke;
+  width: 100%;
+  display: inline-block;
+}
+
+header > nav > ul {
+  width: 100%;
+  list-style-type: none;
+  display: inline-block;
+}
+header > nav > ul > li {
+  display: inline-block;
+  margin-right: 20px;
+  position: relative;
+}
+header > nav > ul > li > a {
+  color: whitesmoke;
+  text-decoration: none;
+  transition: color 0.75s ease-in-out;
+}
+
+header > nav > ul > li > a:hover{
+ color: black;
+}
+
+
+header > nav > ul > li::before{
+ content: "";
+ display: block;
+ width: 0;
+ height: 2px;
+ background-color: black;
+ position: absolute;
+ bottom: 0px;
+ transition: width 0.75s ease-in-out;
+
+}
+
+header > nav > ul > li:hover::before{
+ width: 100%;
+}
+
+/*  
+relative , absolute 
+background image 
+cards with inline-block 
+
+*/
