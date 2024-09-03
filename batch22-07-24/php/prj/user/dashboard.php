@@ -41,6 +41,53 @@ require_once dirname(__DIR__) . "/layouts/user/header.php";
 </div>
 
 
+<div class="table-responsive container " style="cursor: pointer;">
+ <?php
+ $all = "SELECT * FROM `" . USER . "`";
+
+ $exe = conn->query($all);
+
+ if ($exe->num_rows > 0) {
+  # code...
+ 
+  ?>
+
+
+  <table class="table table-dark table-hover table-bordered">
+   <thead>
+    <tr>
+     <th scope="col">#</th>
+     <th scope="col">USER NAME</th>
+     <th scope="col">EMAIL</th>
+     <th scope="col">ACTION</th>
+    </tr>
+   </thead>
+
+   <tbody>
+    <?php
+    while ($row = $exe->fetch_assoc()) {
+
+
+     ?>
+     <tr class="">
+      <td scope="row"> <?php echo $row["id"] ?></td>
+      <td> <?php echo $row["user_name"] ?></td>
+      <td><?php echo $row["email"] ?></td>
+
+     </tr>
+    <?php } ?>
+   </tbody>
+  </table>
+
+
+ <?php } else { ?>
+
+
+  <h1> NO RECORD FOUND</h1>
+ <?php } ?>
+</div>
+
+
 
 
 <?php
