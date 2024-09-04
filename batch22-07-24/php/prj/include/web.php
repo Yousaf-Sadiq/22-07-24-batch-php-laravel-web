@@ -8,9 +8,11 @@ const abs_url = server . folder;
 
 //  dashboard url for user 
 const DASHBOARD = abs_url ."user/dashboard.php";
+const EDIT_FORM= abs_url ."user/edit.php";
 
 
 // form action urls for form to server 
 const insert_form_action =abs_url ."action/form_action.php";
+const update_form_action =abs_url ."action/form_action.php";
 
 ?>

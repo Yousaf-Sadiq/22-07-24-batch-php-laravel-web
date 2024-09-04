@@ -6,6 +6,7 @@ require_once dirname(__DIR__) . "/layouts/user/header.php";
 
 
 <div class="container p-5">
+ <h1>DASHBOARD</h1>
  <form class="text-bg-dark p-5 " action="<?php echo insert_form_action ?>" method="post">
 
   <div class="mb-3 ">
@@ -67,13 +68,20 @@ require_once dirname(__DIR__) . "/layouts/user/header.php";
     <?php
     while ($row = $exe->fetch_assoc()) {
 
-
+     // http://localhost/BATCH_22_JULY_2024/prj/user/edit.php?id=3
+     // http://localhost/BATCH_22_JULY_2024/prj/user/edit.php?qwer=3
+     //  URI 
+     //  query parameter 
      ?>
      <tr class="">
       <td scope="row"> <?php echo $row["id"] ?></td>
       <td> <?php echo $row["user_name"] ?></td>
       <td><?php echo $row["email"] ?></td>
-
+      <td>
+       <a href="<?php echo EDIT_FORM ?>?id=<?php echo $row["id"] ?>" class="btn btn-sm btn-info">
+        EDIT 
+       </a>
+      </td>
      </tr>
     <?php } ?>
    </tbody>

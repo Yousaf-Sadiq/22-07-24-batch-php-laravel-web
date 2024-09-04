@@ -66,4 +66,12 @@ if (!function_exists("refresh_url")) {
    header("Refresh:{$sec},url={$url}");
  }
 }
+
+
+if (!function_exists("redirect_url")) {
+  function redirect_url(string $url){
+   
+    header("Location:{$url}");
+  }
+ }
 ?>
