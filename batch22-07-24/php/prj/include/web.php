@@ -3,8 +3,20 @@
 
 //  server url 
 const  server ="http://localhost/";
+define("server2",$_SERVER["DOCUMENT_ROOT"]);
+
+
 const folder = "BATCH_22_JULY_2024/prj/";
+
+
 const abs_url = server . folder;
+
+const rel_url= server2 . "/".folder;
+
+
+
+
+
 
 //  dashboard url for user 
 const DASHBOARD = abs_url ."user/dashboard.php";

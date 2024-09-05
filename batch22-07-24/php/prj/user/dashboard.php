@@ -1,12 +1,27 @@
 <?php
 require_once dirname(__DIR__) . "/layouts/user/header.php";
-;
+echo rel_url;
 ?>
 
 
 
 <div class="container p-5">
  <h1>DASHBOARD</h1>
+
+ <form class="text-bg-dark p-5" enctype="multipart/form-data"  action="<?php echo insert_form_action ?>" method="post">
+
+  <div class="mb-3">
+   <label for="" class="form-label">Choose file</label>
+   <input type="file" class="form-control" name="images" id="" placeholder="" aria-describedby="fileHelpId" />
+   <div id="fileHelpId" class="form-text">Help text</div>
+  </div>
+
+  <input type="submit" name="uploads" value="upload">
+
+
+ </form>
+
+ <br>
  <form class="text-bg-dark p-5 " action="<?php echo insert_form_action ?>" method="post">
 
   <div class="mb-3 ">
@@ -79,7 +94,7 @@ require_once dirname(__DIR__) . "/layouts/user/header.php";
       <td><?php echo $row["email"] ?></td>
       <td>
        <a href="<?php echo EDIT_FORM ?>?id=<?php echo $row["id"] ?>" class="btn btn-sm btn-info">
-        EDIT 
+        EDIT
        </a>
       </td>
      </tr>

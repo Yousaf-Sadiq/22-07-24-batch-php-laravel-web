@@ -21,6 +21,80 @@ require_once dirname(__DIR__) . "/layouts/user/header.php";
 
 <?php
 
+// upload 
+
+if (isset($_POST["uploads"]) && !empty($_POST["uploads"])) {
+  $file_ext = ["png", "jpg"];
+
+
+  $file = file_upload("images", $file_ext, "assets/upload/");
+
+
+  if ($file == 1) {
+    $a = implode(" ", $file_ext);  // array to string conversion 
+    $a = strtoupper($a);
+    error_msg("{$a} ONLY ALLOWED");
+  }
+
+
+  if ($file == false) {
+    
+  }
+  else{
+    success_msg("FILE HAS BEEN UPLOADED");
+    pre($file);
+  }
+  // if (function  == 1) {
+  //   # code...
+  // }
+  // $file = $_FILES["images"];
+
+  // pre($file);
+
+
+  // $file_name = rand(1, 99) . "_" . $file["name"];
+
+  // $tmp_name = $file["tmp_name"];
+
+  // $ext = pathinfo($file_name, PATHINFO_EXTENSION);
+
+  // $file_ext = ["png", "jpg"];
+
+  // if (!in_array($ext, $file_ext)) {
+
+  //   $a = implode(" ", $file_ext);  // array to string conversion 
+  //   $a = strtoupper($a);
+  //   error_msg("{$a} ONLY ALLOWED");
+
+  //  refresh_url(2,DASHBOARD);
+
+  //  return;
+  // }
+
+
+
+
+
+  // $dest = rel_url . "/assets/upload/" . $file_name;
+
+
+
+
+
+  // if (move_uploaded_file($tmp_name, $dest)) {
+  //   success_msg("FILE HAS BEEN UPLOADED");
+  // } else {
+  //   error_msg("FILE ERROR");
+  // }
+
+  //   relative path  uploading or removing
+
+  //  abs path display/show
+
+}
+
+
+
 // insert form 
 if (isset($_POST["inserts"]) && !empty($_POST["inserts"])) {
 
@@ -209,7 +283,6 @@ if (isset($_POST["updates"]) && !empty($_POST["updates"])) {
 
       error_msg($value);
     }
-
 
     refresh_url(2, DASHBOARD);
 
