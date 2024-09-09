@@ -3,6 +3,8 @@
 
 //  server url 
 const  server ="http://localhost/";
+
+
 define("server2",$_SERVER["DOCUMENT_ROOT"]);
 
 

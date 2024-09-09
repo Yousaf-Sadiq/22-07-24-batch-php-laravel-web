@@ -89,16 +89,34 @@ if (!function_exists("file_upload")) {
 
     $file = $_FILES[$input];
 
+
+  //   pre($file);
+
+  //  return;
+
+
+
     $file_name = rand(1, 99) . "_" . $file["name"];
 
     $tmp_name = $file["tmp_name"];
+
+
+
+
+
+
 
     $fileExt = pathinfo($file_name, PATHINFO_EXTENSION);
 
     $fileExt = strtolower($fileExt);
 
 
-    $extention = $ext;
+
+
+
+
+
+    $extention = $ext; //array of extention 
 
 
 
@@ -107,8 +125,16 @@ if (!function_exists("file_upload")) {
       return 1;
     }
 
-    $destination = rel_url . $dest . $file_name;
-    $abs = abs_url . $dest . $file_name;
+
+
+
+    $destination = rel_url . $dest . $file_name; // rel url 
+
+
+
+    $abs = abs_url . $dest . $file_name; // abs url 
+
+
 
 
     if (move_uploaded_file($tmp_name, $destination)) {
@@ -121,7 +147,8 @@ if (!function_exists("file_upload")) {
       return $b;
 
     } else {
-      return false;
+
+      return 10;
     }
 
 
