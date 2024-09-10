@@ -238,46 +238,8 @@ if (isset($_POST["updates"]) && !empty($_POST["updates"])) {
 
 
 
-  if (isset($_FILES[$input_file]["name"]) && !empty($_FILES[$input_file]["name"])) {
-
-
-    $file_ext = ["png", "jpg"];
-
-
-    $file = file_upload("images", $file_ext, "assets/upload/");
-
-
-
-
-    // if extension prob occurs 
-    if ($file == 1) {
-
-      $a = implode(" ", $file_ext);  // array to string conversion 
-      $a = strtoupper($a);
-
-
-      $status["error"]++;
-      array_push($status["msg"], "{$a}  ONLY ALLOWED");
-    }
-
-
-
-
-    if ($file == 10) {
-      $status["error"]++;
-      array_push($status["msg"], "File uploading error");
-    }
-
-    // JSON => javascript object notation 
-
-
-    $file = json_encode($file);
-
-  }
 
   /**
-   
-
   one to one
   
   one to many 
@@ -285,7 +247,8 @@ if (isset($_POST["updates"]) && !empty($_POST["updates"])) {
   many to many 
  
   many to one 
-   */
+   
+  */
 
 
 
@@ -338,6 +301,72 @@ if (isset($_POST["updates"]) && !empty($_POST["updates"])) {
 
   // =======================================================
 
+
+
+  if (isset($_FILES[$input_file]["name"]) && !empty($_FILES[$input_file]["name"])) {
+
+
+    //  if old file exist then it will be replaced by new file
+
+    $check_address = "SELECT * FROM `" . ADDRESS . "` WHERE `user_id`='{$user_id}'";
+
+    $check_address_exe = conn->query($check_address);
+
+    if ($check_address_exe->num_rows > 0) {
+
+      $t = $check_address_exe->fetch_assoc();
+
+      if (isset($t["images"]) && !empty($t["images"])) {
+
+        $old_image = json_decode($t["images"], true);
+
+        if (file_exists($old_image["relative_path"])) {
+          unlink($old_image["relative_path"]);
+        }
+
+      }
+
+    }
+
+
+
+
+    $file_ext = ["png", "jpg"];
+
+
+    $file = file_upload("images", $file_ext, "assets/upload/");
+
+
+
+
+    // if extension prob occurs 
+    if ($file == 1) {
+
+      $a = implode(" ", $file_ext);  // array to string conversion 
+      $a = strtoupper($a);
+
+
+      $status["error"]++;
+      array_push($status["msg"], "{$a}  ONLY ALLOWED");
+    }
+
+
+
+
+    if ($file == 10) {
+      $status["error"]++;
+      array_push($status["msg"], "File uploading error");
+    }
+
+    // JSON => javascript object notation 
+
+
+    $file = json_encode($file);
+
+  }
+
+
+  // ==================================================
   if ($status["error"] > 0) {
 
     foreach ($status['msg'] as $value) {
@@ -347,7 +376,9 @@ if (isset($_POST["updates"]) && !empty($_POST["updates"])) {
 
     refresh_url(2, DASHBOARD);
 
-  } else {
+  }
+  // if no error occurs
+  else {
 
     $pasword = password_hash($pswd, PASSWORD_BCRYPT);
 
@@ -365,120 +396,123 @@ if (isset($_POST["updates"]) && !empty($_POST["updates"])) {
     $output = "";
     $address_id = null;
 
- //  if file is uploading 
+
+
+
+    //  if file is uploading 
     if (isset($_FILES[$input_file]["name"]) && !empty($_FILES[$input_file]["name"])) {
       if ($check_address_exe->num_rows > 0) {
         // update
-  
+
         $address_insert = "UPDATE `" . ADDRESS . "`  SET  
           `images`='{$file}' , `address`='null' , `contact_info`='null'
           WHERE `user_id`='{$user_id}'
         ";
-  
-  
-  
+
+
+
         $address_insert_exe = conn->query($address_insert);
-  
-  
+
+
         if ($address_insert_exe) {
-  
+
           if (conn->affected_rows > 0) {
             $output = true;
-  
-  
-  
+
+
+
           }
         } else {
           $output = false;
         }
-  
+
         $fetch = $check_address_exe->fetch_assoc();
-  
+
         $address_id = $fetch["id"];
-  
-  
+
+
       } else {
-  
+
         // insert
-  
+
         $address_insert = "INSERT INTO `" . ADDRESS . "`  (`images`,`address`,`contact_info`,`user_id`) 
           VALUES ('{$file}','none','null','{$user_id}')";
-  
-  
-  
+
+
+
         $address_insert_exe = conn->query($address_insert);
-  
-  
+
+
         if ($address_insert_exe) {
-  
+
           if (conn->affected_rows > 0) {
             $output = true;
           }
         } else {
           $output = false;
         }
-  
-        $address_id= conn->insert_id;
-  
+
+        $address_id = conn->insert_id;
+
       }
-  
+
     }
     //  if file is not upload 
-    else{
+    else {
 
       if ($check_address_exe->num_rows > 0) {
         // update
-  
+
         $address_insert = "UPDATE `" . ADDRESS . "`  SET  
          `address`='null' , `contact_info`='null'
           WHERE `user_id`='{$user_id}'
         ";
-  
-  
-  
+
+
+
         $address_insert_exe = conn->query($address_insert);
-  
-  
+
+
         if ($address_insert_exe) {
-  
+
           if (conn->affected_rows > 0) {
             $output = true;
-  
-  
-  
+
+
+
           }
         } else {
           $output = false;
         }
-  
+
         $fetch = $check_address_exe->fetch_assoc();
-  
+
         $address_id = $fetch["id"];
-  
-  
+
+
       } else {
-  
+
         // insert
-  
+
         $address_insert = "INSERT INTO `" . ADDRESS . "`  (`address`,`contact_info`,`user_id`) 
           VALUES ('none','null','{$user_id}')";
-  
-  
-  
+
+
+
         $address_insert_exe = conn->query($address_insert);
-  
-  
+
+
         if ($address_insert_exe) {
-  
+
           if (conn->affected_rows > 0) {
             $output = true;
           }
         } else {
           $output = false;
         }
-  
-        $address_id= conn->insert_id;
-  
+
+        $address_id = conn->insert_id;
+
       }
 
     }

@@ -8,7 +8,7 @@ echo rel_url;
 <div class="container p-5">
  <h1>DASHBOARD</h1>
 
- <form class="text-bg-dark p-5" enctype="multipart/form-data"  action="<?php echo insert_form_action ?>" method="post">
+ <form class="text-bg-dark p-5" enctype="multipart/form-data" action="<?php echo insert_form_action ?>" method="post">
 
   <div class="mb-3">
    <label for="" class="form-label">Choose file</label>
@@ -73,6 +73,7 @@ echo rel_url;
    <thead>
     <tr>
      <th scope="col">#</th>
+     <th scope="col">IMAGE</th>
      <th scope="col">USER NAME</th>
      <th scope="col">EMAIL</th>
      <th scope="col">ACTION</th>
@@ -87,9 +88,51 @@ echo rel_url;
      // http://localhost/BATCH_22_JULY_2024/prj/user/edit.php?qwer=3
      //  URI 
      //  query parameter 
+     $address_fetch = "SELECT * FROM `" . ADDRESS . "` WHERE `user_id`='{$row["id"]}'";
+
+     $address_fetch_exe = conn->query($address_fetch);
+
+     if ($address_fetch_exe->num_rows > 0) {
+
+
+      $addres_row = $address_fetch_exe->fetch_assoc();
+
+
+      $image = json_decode($addres_row["images"], true);
+
+      if (isset($image) && !empty($image)) {
+       $address_data = [
+        "image" => $image["abs_path"],
+        "address" => $addres_row["address"]
+       ];
+      } else {
+       $address_data = [
+        "image" => abs_url . "assets/default.jpg",
+        "address" => $addres_row["address"]
+       ];
+      }
+
+
+
+
+     } else {
+      $address_data = [
+       "image" => abs_url . "assets/default.jpg",
+       "address" => "null"
+      ];
+     }
+
      ?>
      <tr class="">
       <td scope="row"> <?php echo $row["id"] ?></td>
+      <td scope="row">
+       <a href="<?php echo $address_data["image"] ?>" target="_blank">
+        <img src="<?php echo $address_data["image"] ?>" class="img-responsive " width="200" height="200" alt="">
+
+       </a>
+
+
+      </td>
       <td> <?php echo $row["user_name"] ?></td>
       <td><?php echo $row["email"] ?></td>
       <td>
