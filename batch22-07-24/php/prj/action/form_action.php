@@ -553,6 +553,64 @@ if (isset($_POST["updates"]) && !empty($_POST["updates"])) {
 
 }
 
+
+
+// delete ---------------------
+
+if (isset($_POST["deletes"]) && !empty($_POST["deletes"])) {
+
+  $user_id = filterData($_POST["_token"]);
+
+  $address = "SELECT * FROM `" . ADDRESS . "` WHERE `user_id`='{$user_id}'";
+
+  $address_exe = conn->query($address);
+
+
+
+
+  $user_delete = "DELETE FROM `" . USER . "` WHERE `id`='{$user_id}'";
+  $user_delete_exe = conn->query($user_delete);
+
+
+  if ($address_exe->num_rows > 0) {
+
+    $fetch = $address_exe->fetch_assoc();
+
+    if (isset($fetch["images"]) && !empty($fetch["images"])) {
+
+      $old_image = json_decode($fetch["images"],true);
+
+      if (file_exists($old_image["relative_path"])) {
+        unlink($old_image["relative_path"]);
+      }
+    }
+
+
+
+
+    $address_delete = "DELETE FROM `" . ADDRESS . "` WHERE `user_id`='{$user_id}'";
+    $address_delete_exe = conn->query($address_delete);
+
+
+  }
+
+
+
+
+  if ($user_delete_exe) {
+    if (conn->affected_rows > 0) {
+      success_msg("DATA  HAS BEEN DELETED");
+    } else {
+      error_msg("DATA HAS NOT BEEN DELETED");
+    }
+  } else {
+    error_msg("ERROR IN QUERY {$user_delete}");
+  }
+
+
+  refresh_url(2, DASHBOARD);
+}
+
 ?>
 
 

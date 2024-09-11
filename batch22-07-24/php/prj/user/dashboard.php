@@ -127,7 +127,7 @@ echo rel_url;
       <td scope="row"> <?php echo $row["id"] ?></td>
       <td scope="row">
        <a href="<?php echo $address_data["image"] ?>" target="_blank">
-        <img src="<?php echo $address_data["image"] ?>" class="img-responsive " width="200" height="200" alt="">
+        <img src="<?php echo $address_data["image"] ?>" class="img-responsive " width="100" height="100" alt="">
 
        </a>
 
@@ -138,6 +138,13 @@ echo rel_url;
       <td>
        <a href="<?php echo EDIT_FORM ?>?id=<?php echo $row["id"] ?>" class="btn btn-sm btn-info">
         EDIT
+       </a>
+       <?php
+       $user_id = $row["id"];
+       ?>
+       <!-- Button trigger modal -->
+       <a type="button" class="btn btn-sm btn-danger" onclick="ONdelete('<?php echo $user_id ?>')">
+        delete
        </a>
       </td>
      </tr>
@@ -156,7 +163,51 @@ echo rel_url;
 
 
 
+<!-- Modal -->
+<div class="modal fade" id="delete_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+ aria-labelledby="staticBackdropLabel" aria-hidden="true">
+ <div class="modal-dialog">
+  <div class="modal-content">
+   <div class="modal-header">
+    <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+   </div>
+   <div class="modal-body">
+    <h1>ARE YOU SURE <span class="text-danger"> ! </span></h1>
+   </div>
+   <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
+
+    <form action="<?php echo delete_form_action; ?>" method="post">
+   
+     <input type="hidden" name="_token" id="_token" value="testing">
+
+     <input type="submit" name="deletes" value="YES" class="btn btn-primary">
+   
+    </form>
+
+   </div>
+  </div>
+ </div>
+</div>
+
 <?php
 require_once dirname(__DIR__) . "/layouts/user/footer.php";
 ;
 ?>
+
+<script>
+
+ function ONdelete(id) {
+  let MyModal = document.querySelector("#delete_modal");
+
+  const myModalAlternative = new bootstrap.Modal(MyModal); // object 
+
+  myModalAlternative.show(MyModal);
+
+  let _token = document.querySelector("#_token");
+  _token.value = id;
+
+
+ }
+</script>

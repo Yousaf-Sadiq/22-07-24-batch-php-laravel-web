@@ -28,5 +28,6 @@ const EDIT_FORM= abs_url ."user/edit.php";
 // form action urls for form to server 
 const insert_form_action =abs_url ."action/form_action.php";
 const update_form_action =abs_url ."action/form_action.php";
+const delete_form_action =abs_url ."action/form_action.php";
 
 ?>
