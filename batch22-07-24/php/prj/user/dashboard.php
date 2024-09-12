@@ -1,14 +1,34 @@
 <?php
 require_once dirname(__DIR__) . "/layouts/user/header.php";
-echo rel_url;
+// echo rel_url;
+// session_destroy();
+
+// http://localhost/BATCH_22_JULY_2024/prj/user/dashboard.php
+// echo $_SERVER["PHP_SELF"]."<br>";
+
+// echo  chopExtension($_SERVER["PHP_SELF"]);
+
+if (!isset($_SESSION["user_id"]) && empty($_SESSION["user_id"])) {
+ redirect_url(LOGIN);
+}
+
 ?>
+
+
+
+
+<!-- condition   ?  true : false 
+
+(chopExtension($_SERVER["PHP_SELF"]) == "dashboard.php")? "active" : "" -->
+
+
 
 
 
 <div class="container p-5">
  <h1>DASHBOARD</h1>
 
- <form class="text-bg-dark p-5" enctype="multipart/form-data" action="<?php echo insert_form_action ?>" method="post">
+ <!-- <form class="text-bg-dark p-5" enctype="multipart/form-data" action="<?php echo insert_form_action ?>" method="post">
 
   <div class="mb-3">
    <label for="" class="form-label">Choose file</label>
@@ -19,10 +39,10 @@ echo rel_url;
   <input type="submit" name="uploads" value="upload">
 
 
- </form>
+ </form> -->
 
- <br>
- <form class="text-bg-dark p-5 " action="<?php echo insert_form_action ?>" method="post">
+
+ <!-- <form class="text-bg-dark p-5 " action="<?php echo insert_form_action ?>" method="post">
 
   <div class="mb-3 ">
    <label for="exampleInputEmail1" class="form-label">USER NAME</label>
@@ -48,18 +68,17 @@ echo rel_url;
    <label class="form-check-label" for="exampleCheck1">Check me out</label>
   </div>
 
-  <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
 
   <input type="submit" name="inserts" class="btn btn-primary">
 
- </form>
+ </form> -->
 
 </div>
 
 
 <div class="table-responsive container " style="cursor: pointer;">
  <?php
- $all = "SELECT * FROM `" . USER . "`";
+ $all = "SELECT * FROM `" . USER . "` WHERE `id`='{$_SESSION["user_id"]}'";
 
  $exe = conn->query($all);
 
@@ -179,11 +198,11 @@ echo rel_url;
     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
 
     <form action="<?php echo delete_form_action; ?>" method="post">
-   
+
      <input type="hidden" name="_token" id="_token" value="testing">
 
      <input type="submit" name="deletes" value="YES" class="btn btn-primary">
-   
+
     </form>
 
    </div>

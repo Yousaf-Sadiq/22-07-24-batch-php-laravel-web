@@ -90,9 +90,9 @@ if (!function_exists("file_upload")) {
     $file = $_FILES[$input];
 
 
-  //   pre($file);
+    //   pre($file);
 
-  //  return;
+    //  return;
 
 
 
@@ -158,6 +158,16 @@ if (!function_exists("file_upload")) {
 }
 
 
+function chopExtension($filename)
+{
+  //           dashboard                                         .            php
+  $a = pathinfo($filename, PATHINFO_FILENAME) . "." . pathinfo($filename, PATHINFO_EXTENSION);
 
+  // dashboard.php
+
+  return $a;
+
+
+}
 
 ?>

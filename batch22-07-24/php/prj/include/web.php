@@ -30,4 +30,12 @@ const insert_form_action =abs_url ."action/form_action.php";
 const update_form_action =abs_url ."action/form_action.php";
 const delete_form_action =abs_url ."action/form_action.php";
 
+
+const signup_form_action =abs_url ."action/auth/signup.php";
+const login_form_action =abs_url ."action/auth/login.php";
+
+// login user
+const LOGIN = abs_url ."user/auth/login.php";
+const SIGNUP = abs_url ."user/auth/signup.php";
+const LOGOUT = abs_url ."user/logout.php";
 ?>
