@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 /**
  * 
- 1. Encapsulation 
+ 1. Encapsulation (information hiding)
  2. inheritance 
  3. polymorphism
  4. abstraction  
@@ -39,6 +39,8 @@ class AreaOfRectangle
   $z = $this->a * $this->b;
   return $z;
  }
+
+
 }
 
 
