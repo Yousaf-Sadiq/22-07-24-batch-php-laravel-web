@@ -8,6 +8,10 @@ trait Inserts
  public function inserts(string $table, array $data)
  {
 
+  $status = [
+   "error" => 0,
+   "msg" => []
+  ];
   if ($this->CheckTable($table)) {
 
    $col = array_keys($data);  // array 
@@ -34,7 +38,8 @@ trait Inserts
 
    if ($this->exe) {
     if ($this->conn->affected_rows > 0) {
-     echo "inserted";
+     $status["msg"][] = "DATA HAS BEEN INSERTED";
+
     }
    }
 
@@ -49,8 +54,10 @@ trait Inserts
 
 
   } else {
-   echo "table not exist";
+   $status["msg"][] = ["table is not existed"];
   }
+
+  return json_encode($status);
 
  }
 

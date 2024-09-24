@@ -1,0 +1,4 @@
+<?php
+const USER = "users";
+
+?>

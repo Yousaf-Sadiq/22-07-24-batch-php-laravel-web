@@ -4,6 +4,7 @@ namespace App\database;
 
 require_once dirname(__FILE__) . "/traits/checkTable.php";
 require_once dirname(__FILE__) . "/traits/insert.php";
+require_once dirname(__FILE__) . "/traits/Mysql.php";
 
 class DB
 {
@@ -33,7 +34,7 @@ class DB
 
 
 
- use \CheckTable,\Inserts;
+ use \CheckTable, \Inserts,\Mysql;
 
 
  public function __destruct()
@@ -44,6 +45,19 @@ class DB
 }
 
 
+class helper extends DB
+{
+
+
+ public function FilterData(string $data)
+ {
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  $data = $this->conn->real_escape_string($data);
+  return $data;
+ }
+}
 
 
 
