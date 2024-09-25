@@ -5,6 +5,8 @@ namespace App\database;
 require_once dirname(__FILE__) . "/traits/checkTable.php";
 require_once dirname(__FILE__) . "/traits/insert.php";
 require_once dirname(__FILE__) . "/traits/Mysql.php";
+require_once dirname(__FILE__) . "/traits/select.php";
+require_once dirname(__FILE__) . "/traits/fetchData.php";
 
 class DB
 {
@@ -34,7 +36,7 @@ class DB
 
 
 
- use \CheckTable, \Inserts,\Mysql;
+ use \CheckTable, \Inserts, \Mysql, \Select, \FetchData;
 
 
  public function __destruct()
@@ -57,6 +59,14 @@ class helper extends DB
   $data = $this->conn->real_escape_string($data);
   return $data;
  }
+
+ public function pre(array $a)
+ {
+  echo "<pre>";
+  print_r($a);
+  echo "</pre>";
+ }
+
 }
 
 

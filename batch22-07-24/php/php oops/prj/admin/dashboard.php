@@ -3,8 +3,10 @@ require_once dirname(__DIR__) . "/app/database.php";
 require_once dirname(__DIR__) . "/layout/admin/header.php";
 
 use App\database\DB as DB;
-
+use App\database\helper as help;
+$help = new help();
 $r = new DB;
+
 
 // $t=[
 // "email"=>"xyz",
@@ -51,8 +53,55 @@ $r = new DB;
 
 
 </div>
+<?php
 
 
+$t = $r->select(USER, "*", null, null, null, true);
+if ($t) {
+ ?>
+ <div class="table-responsive container">
+  <table class="table text-center table-striped table-hover table-borderless table-dark align-middle">
+   <thead class="table-light">
+    <caption>
+     USER TABLE
+    </caption>
+    <tr>
+     <th>#</th>
+     <th>USERNAME</th>
+     <th>EMAIL</th>
+    </tr>
+   </thead>
+   <tbody class="table-group-divider">
+
+    <?php
+    $q = $r->getResult();
+    // $help->pre($q);
+   
+    foreach ($q as $key => $value) {
+     # code...
+   
+
+     ?>
+
+     <tr>
+      <td scope="row"><?php echo $value["id"] ?></td>
+      <td><?php echo $value["user_name"] ?></td>
+      <td><?php echo $value["email"] ?></td>
+     </tr>
+     <?php
+
+    }
+
+    ?>
+   </tbody>
+
+  </table>
+ </div>
+<?php } else { ?>
+
+ <h1>NO RECORD FOUND </h1>
+
+<?php } ?>
 <?php
 require_once dirname(__DIR__) . "/layout/admin/footer.php";
 
@@ -90,8 +139,12 @@ require_once dirname(__DIR__) . "/layout/admin/footer.php";
 
   }
   else {
+
    AlertMsg(data.msg, "success", "error")
 
+   setTimeout(() => {
+    location.reload()
+   }, 1000);
 
   }
 

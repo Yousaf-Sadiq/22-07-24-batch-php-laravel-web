@@ -1,5 +1,6 @@
 <?php
 require_once dirname(__DIR__) . "/../include/web.php";
+require_once dirname(__DIR__) . "/../include/table.php";
 
 ?>
 <!doctype html>
