@@ -2,11 +2,14 @@
 declare(strict_types=1);
 namespace App\database;
 
+use Update;
+
 require_once dirname(__FILE__) . "/traits/checkTable.php";
 require_once dirname(__FILE__) . "/traits/insert.php";
 require_once dirname(__FILE__) . "/traits/Mysql.php";
 require_once dirname(__FILE__) . "/traits/select.php";
 require_once dirname(__FILE__) . "/traits/fetchData.php";
+require_once dirname(__FILE__) . "/traits/update.php";
 
 class DB
 {
@@ -36,7 +39,7 @@ class DB
 
 
 
- use \CheckTable, \Inserts, \Mysql, \Select, \FetchData;
+ use \CheckTable, \Inserts, \Mysql, \Select, \FetchData,\Update;
 
 
  public function __destruct()

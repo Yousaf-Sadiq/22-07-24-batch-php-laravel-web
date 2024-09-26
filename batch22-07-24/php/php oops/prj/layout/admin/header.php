@@ -22,6 +22,7 @@ require_once dirname(__DIR__) . "/../include/table.php";
         top: 10px;
         right: 5px;
         width: 300px;
+        z-index: 999999;
       }
     </style>
 

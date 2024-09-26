@@ -10,6 +10,7 @@ const Dashboard = abs_url . "admin/dashboard.php";
 
 
 const insert_admin_action = abs_url . "/action/admin/form_action.php";
+const update_admin_action = abs_url . "/action/admin/form_action.php";
 
 
 
