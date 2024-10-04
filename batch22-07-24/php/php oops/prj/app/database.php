@@ -10,6 +10,7 @@ require_once dirname(__FILE__) . "/traits/Mysql.php";
 require_once dirname(__FILE__) . "/traits/select.php";
 require_once dirname(__FILE__) . "/traits/fetchData.php";
 require_once dirname(__FILE__) . "/traits/update.php";
+require_once dirname(__FILE__) . "/traits/delete.php";
 
 class DB
 {
@@ -39,7 +40,7 @@ class DB
 
 
 
- use \CheckTable, \Inserts, \Mysql, \Select, \FetchData,\Update;
+ use \CheckTable, \Inserts, \Mysql, \Select, \FetchData,\Update,\Delete;
 
 
  public function __destruct()

@@ -101,6 +101,11 @@ if ($t) {
                                 class="btn btn-sm btn-info">
                                 EDIT
                             </a>
+
+                            <a href="javascript:void(0)" onclick="OnDelete('<?php echo $id ?>')" class="btn btn-sm btn-danger">
+                                DELETE
+                            </a>
+
                         </td>
                     </tr>
                     <?php
@@ -177,10 +182,199 @@ if ($t) {
     </div>
 </div>
 
+<!-- =-=================== -->
+
+<!-- Modal -->
+<div class="modal fade" id="delete_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">DELETE</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <h1> ARE YOU SURE <span class="text-danger"> !</span> </h1>
+
+                <form id="delete_form">
+
+                    <input type="hidden" name="_token" id="d_token">
+
+                    <input type="hidden" value="deletes" name="deletes">
+
+
+                    <button type="submit" class="btn btn-primary">YES</button>
+                </form>
+
+
+
+
+
+
+
+            </div>
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Understood</button>
+            </div> -->
+        </div>
+    </div>
+</div>
 <?php
 require_once dirname(__DIR__) . "/layout/admin/footer.php";
 
 ?>
+<script>
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: "btn btn-success",
+            cancelButton: "btn btn-danger"
+        },
+        buttonsStyling: false
+    });
+
+
+
+    function OnDelete(id) {
+        // let delete_modal = document.querySelector("#delete_modal");
+        // const myModalAlternative = new bootstrap.Modal(delete_modal)
+        // myModalAlternative.show(delete_modal);
+
+        swalWithBootstrapButtons.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel!",
+            reverseButtons: true
+
+
+
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                // 
+                submitDElete()
+                // ,,,,,,,,,,,,,,,,,,,,,,
+
+
+
+
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire({
+                    title: "Cancelled",
+                    text: "Your imaginary file is safe :)",
+                    icon: "error"
+                });
+            }
+        });
+
+
+
+        d_token.value = id
+    }
+
+    let delete_form = document.querySelector("#delete_form");
+
+
+    async function submitDElete() {
+        let url = "<?php echo delete_admin_action ?>";
+        let Fdata = new FormData(delete_form);
+
+        let option = {
+            method: "POST",
+            body: Fdata
+        }
+
+        let data = await fetch(url, option);
+
+        let res = await data.json();
+
+
+        if (res.error && res.error > 0) {
+
+            for (const key in res.msg) {
+
+                AlertMsg(res.msg[key], "danger", "error")
+            }
+
+        }
+        else {
+            swalWithBootstrapButtons.fire({
+                title: "Deleted!",
+                text: res.msg,
+                icon: "success"
+            });
+
+            // AlertMsg(res.msg, "success", "error")
+
+            setTimeout(() => {
+                location.reload()
+            }, 2000);
+
+        }
+    }
+
+    delete_form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        let url = "<?php echo delete_admin_action ?>";
+        let Fdata = new FormData(delete_form);
+
+        let option = {
+            method: "POST",
+            body: Fdata
+        }
+
+        let data = await fetch(url, option);
+
+        let res = await data.json();
+
+
+        if (res.error && res.error > 0) {
+
+            for (const key in res.msg) {
+
+                AlertMsg(res.msg[key], "danger", "error")
+            }
+
+        }
+        else {
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Your work has been saved",
+                showConfirmButton: false,
+                timer: 1500
+            });
+
+            AlertMsg(res.msg, "success", "error")
+
+            setTimeout(() => {
+                location.reload()
+            }, 1000);
+
+        }
+
+
+    })
+
+
+</script>
+
+
+
+
+
+
+
+
+
 <script>
     function OnEDIT(_token, userName, email, pass) {
         let editModal = document.querySelector("#edit_modal");

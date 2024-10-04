@@ -141,4 +141,57 @@ if (isset($_POST["updates"]) && !empty($_POST["updates"])) {
     }
 }
 
+
+
+
+
+if (isset($_POST["deletes"]) && !empty($_POST["deletes"])) {
+
+
+
+    $user_id = $help->FilterData($_POST["_token"]);
+
+    $user_id = base64_decode($user_id);
+
+
+    // --------------------------------------------------------------------
+    $status = [
+        "error" => 0,
+        "msg" => []
+    ];
+
+    if (!isset($user_id) || empty($user_id)) {
+        $status['error']++;
+        array_push($status["msg"], "ID IS REQUIRED");
+    }
+
+
+    // check 
+
+    $check = "SELECT * FROM `" . USER . "` WHERE  id = '{$user_id}'";
+    $exe = $db->Mysql($check, true);
+
+    if (!$exe) {
+       
+        $status['error']++;
+        array_push($status["msg"], "DATA NOT EXIST");
+    }
+    // else{
+       
+    // }
+
+    if ($status['error'] > 0) {
+        echo json_encode($status);
+        return;
+    } else {
+
+
+    
+
+
+        echo $db->delete(USER, "`id`='{$user_id}'");
+
+    }
+}
+
 ?>
