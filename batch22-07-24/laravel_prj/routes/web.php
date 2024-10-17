@@ -22,11 +22,16 @@ Route::prefix("admin")->controller(AdminController::class)->group(function () {
 
     // update
     Route::get('/dashboard/update/{id}', "show")
-    ->name("admin.dashboard.update")
-    ->whereNumber("id");
+        ->name("admin.dashboard.update")
+        ->whereNumber("id");
 
 
     Route::post('/dashboard/update/submit', "update")->name("admin.dashboard.update.post");
 
+
+
+    //  upload file
+
+    Route::post("/uploads", "upload")->name("upload.admin");
 });
 

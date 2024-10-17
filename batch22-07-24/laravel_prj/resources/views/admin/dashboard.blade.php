@@ -15,6 +15,17 @@
 
 
     <div class="form-body mt-4">
+        <form action="{{ route('upload.admin') }}" enctype="multipart/form-data" method="post">
+            @csrf
+            <input type="file" name="profile" id="">
+            @error('profile')
+                {{ $message }}
+            @enderror
+            <button type="submit"> UPLOAD</button>
+        </form>
+
+        {{-- <img src="{{asset("upload/admin/3HCXr_Chaicon 2025.jpg")}}" alt=""> --}}
+
         <form class="row g-3" action="{{ route('admin.dashboard.post') }}" method="POST">
             @csrf
             <div class="col-12">
@@ -89,7 +100,8 @@
                         <td>{{ $data->Username }}</td>
                         <td>{{ $data->email }}</td>
                         <td>
-                            <a href="{{route("admin.dashboard.update",$data->admin_id)}}"  class="btn btn-md btn-info"> update</a>
+                            <a href="{{ route('admin.dashboard.update', $data->admin_id) }}" class="btn btn-md btn-info">
+                                update</a>
                         </td>
                     </tr>
                 @endforeach
@@ -99,6 +111,6 @@
 
         </table>
         {{-- http://127.0.0.1:8000/admin/dashboard?page=2 --}}
-        {{ $adminData->links("pagination::myPagination") }}
+        {{ $adminData->links('pagination::myPagination') }}
     </div>
 @endsection

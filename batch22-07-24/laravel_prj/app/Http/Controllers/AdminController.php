@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
+
 
 class AdminController extends Controller
 {
@@ -127,6 +129,28 @@ class AdminController extends Controller
     public function edit(string $id)
     {
         //
+    }
+
+
+    public function upload(Request $req)
+    {
+        // dd($req);
+
+        $rules = [
+            "profile" => "required|mimes:jpg,jpeg,png"
+        ];
+
+        $req->validate($rules);
+
+        $file = FIleUpload($req, "profile", "upload/admin");
+
+        if (!$file) {
+
+            dd("File UPloading error");
+        }
+
+        echo $file;
+
     }
 
     /**
