@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Address extends Model
 {
     use HasFactory;
+
+    protected $primaryKey="adrs_id";
+
+    protected $guarded = [];
 }

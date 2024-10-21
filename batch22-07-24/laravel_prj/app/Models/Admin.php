@@ -10,5 +10,6 @@ class Admin extends Model
     use HasFactory;
     protected $primaryKey = "admin_id";
 
-    protected $fillable = ["Username", "email", "password", "ptoken"];
+    // protected $fillable = ["Username", "email", "password", "ptoken"];
+    protected $guarded = [];
 }

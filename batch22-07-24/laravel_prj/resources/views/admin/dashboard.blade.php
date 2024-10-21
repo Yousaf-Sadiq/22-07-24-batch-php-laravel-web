@@ -15,14 +15,14 @@
 
 
     <div class="form-body mt-4">
-        <form action="{{ route('upload.admin') }}" enctype="multipart/form-data" method="post">
+        {{-- <form action="{{ route('upload.admin') }}" enctype="multipart/form-data" method="post">
             @csrf
             <input type="file" name="profile" id="">
             @error('profile')
                 {{ $message }}
             @enderror
             <button type="submit"> UPLOAD</button>
-        </form>
+        </form> --}}
 
         {{-- <img src="{{asset("upload/admin/3HCXr_Chaicon 2025.jpg")}}" alt=""> --}}
 

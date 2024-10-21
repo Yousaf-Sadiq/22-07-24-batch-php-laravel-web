@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
 use App\Models\Admin;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -171,6 +173,10 @@ class AdminController extends Controller
 
             "pswd" => "required|between:1,8|string"
         ];
+
+
+
+
         $customMessage = [
             "user_name.required" => "USER NAME IS REQUIRED",
             // "user_name.between" =    > "USER NAME MUST BETWEEN 1 to 6 CHARACTOR",
@@ -186,14 +192,62 @@ class AdminController extends Controller
         ];
 
 
+
+        if ($req->hasFile("profile")) {
+
+
+            $rules["profile"] = "required|mimes:jpg,jpeg,png";
+
+            $customMessage["profile.required"] = "PROFILE FIELD IS REQUIRED";
+            $customMessage["profile.mimes"] = "ONLY JPG PNG AND JPEG ALLOWED";
+        }
+
         $req->validate($rules, $customMessage);
 
 
         $email = $req->input("Email");
         $user_name = $req->input("user_name");
         $pswd = $req->input("pswd");
+        $file = NULL;
 
         // $email=$request->Email;
+        $adres = Address::where("user_id", $admin_id)->get();
+
+        if ($req->hasFile("profile")) {
+
+
+
+
+            //  old image remove
+            if (count($adres) > 0) {
+
+                if (isset($adres[0]->image) && !empty($adres[0]->image)) {
+
+
+                    $oldImage = public_path($adres[0]->image);
+
+                    if (File::exists($oldImage)) {
+                        File::delete($oldImage);
+                    }
+                }
+            }
+
+
+            //  new file upload
+            $file = FIleUpload($req, "profile", "upload/admin");
+
+        } else {
+
+
+            if (count($adres) > 0) {
+
+                if (isset($adres[0]->image) && !empty($adres[0]->image)) {
+                    $file = $adres[0]->image;
+                }
+            }
+
+
+        }
 
 
 
@@ -204,12 +258,35 @@ class AdminController extends Controller
 
 
 
+
+
+
+        $data2 = [
+            "image" => $file,
+            // "user_id"=>$admin->admin_id
+            "user_id" => $admin_id
+        ];
+
+
+        $adrs = Address::updateOrCreate(
+            [
+                "user_id" => $admin_id,
+            ],
+            $data2
+        );
+
+        // dd($adrs);
+
+
         $data = [
             "Username" => $user_name,
             "email" => $email,
             "password" => $hashed,
-            "ptoken" => $encrypt
+            "ptoken" => $encrypt,
+            "address_id" => $adrs->adrs_id
         ];
+
+
 
         // $admin = Admin::where("admin_id", "=", $admin_id)->update($data);
 
@@ -219,6 +296,8 @@ class AdminController extends Controller
             ],
             $data
         );
+
+
 
         if ($admin) {
             return redirect()->route("admin.dashboard")->with("success", "DATA HAS BEEN UPDATE");

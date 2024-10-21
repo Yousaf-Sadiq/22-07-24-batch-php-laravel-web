@@ -15,10 +15,20 @@
 
 
     <div class="form-body mt-4">
-        <form class="row g-3" action="{{ route('admin.dashboard.update.post') }}" method="POST">
+        <form class="row g-3" action="{{ route('admin.dashboard.update.post') }}" enctype="multipart/form-data" method="POST">
             @csrf
 
-            <input type="text" value="{{ $admin->admin_id }}" name="adminId">
+            <input type="hidden" value="{{ $admin->admin_id }}" name="adminId">
+
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="inputGroupFile01">Upload profile</label>
+                <input type="file" class="form-control" name="profile" id="profile">
+
+
+            </div>
+            <div class="col-md-12">
+                <img src="" id="img-preview" width="300" height="300" alt="">
+            </div>
 
             <div class="col-12">
                 <label for="inputEmailAddress" class="form-label">User name</label>
@@ -74,4 +84,49 @@
 
 
     </div>
+@endsection
+
+@section('admin_script')
+    <script>
+        let profile = document.querySelector("#profile");
+
+        profile.addEventListener("change", function() {
+
+            let file = profile.files[0];
+
+
+
+            console.log(file);
+
+
+            let reader = new FileReader();
+
+
+
+
+
+            let imgPreview = document.querySelector("#img-preview");
+
+
+            reader.onload = function(t) {
+
+                let imageUrl = t.target.result;
+
+
+
+                imgPreview.src = imageUrl;
+
+
+            }
+
+
+
+
+            if (file) {
+                reader.readAsDataURL(file)
+            }
+
+
+        })
+    </script>
 @endsection
