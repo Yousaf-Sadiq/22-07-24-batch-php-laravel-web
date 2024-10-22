@@ -27,7 +27,7 @@
 
             </div>
             <div class="col-md-12">
-                <img src="" id="img-preview" width="300" height="300" alt="">
+                <img src="{{asset($admin->address->image)}}" id="img-preview" width="300" height="300" alt="">
             </div>
 
             <div class="col-12">

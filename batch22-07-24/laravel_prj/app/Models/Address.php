@@ -12,4 +12,13 @@ class Address extends Model
     protected $primaryKey="adrs_id";
 
     protected $guarded = [];
+
+    public function admin(){
+
+        return $this->belongsTo(Admin::class,"adrs_id","address_id");
+    }
+
+    function admin2(){
+
+    }
 }

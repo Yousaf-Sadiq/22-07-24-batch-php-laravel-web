@@ -19,7 +19,10 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $adminData = Admin::paginate(10);
+        // $adminData = Admin::paginate(10);
+
+        // dd($adminData);
+
         // $adminData = Admin::select("email","admin_id","Username")
         // ->where([
         //     "email"=>"lynikamojy@mailinator.com",
@@ -31,6 +34,10 @@ class AdminController extends Controller
 
 
         // dd($adminData);
+        // $b = Address::with("admin")->get();
+        // dd($b);
+
+        $adminData = Admin::with("address")->paginate(10);
         return view("admin.dashboard", compact("adminData"));
     }
 
@@ -120,7 +127,7 @@ class AdminController extends Controller
      */
     public function show(string $id)
     {
-        $admin = Admin::findOrFail($id);
+        $admin = Admin::with("address")->findOrFail($id);
         // dd($admin);
         return view("admin.update", compact("admin"));
     }

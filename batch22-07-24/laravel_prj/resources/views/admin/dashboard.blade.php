@@ -88,15 +88,22 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
+                    <th scope="col">PRofile</th>
                     <th scope="col">User name</th>
                     <th scope="col">Email</th>
                     <th scope="col">ACTION</th>
                 </tr>
             </thead>
             <tbody>
+
                 @foreach ($adminData as $data)
                     <tr class="">
                         <td scope="row">{{ $data->admin_id }}</td>
+                        <td class="w-25">
+                            <a href="{{asset($data->address->image)}}" target="_blank">
+                                <img src="{{asset($data->address->image)}}"  class=" img-fluid img-thumbnail rounded " alt="">
+                            </a>
+                        </td>
                         <td>{{ $data->Username }}</td>
                         <td>{{ $data->email }}</td>
                         <td>
