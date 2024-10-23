@@ -36,7 +36,10 @@ Route::prefix("admin")->controller(AdminController::class)->group(function () {
 
 
     // delete route
-    Route::post("/dashboard/submit/delete/{id}", "destroy")->name("dashboard.delete.post");
-    Route::post("/dashboard/submit/delete/", "destroy2")->name("dashboard.delete.post2");
+    // Route::post("/dashboard/submit/delete/{id}", "destroy")->name("dashboard.delete.post");
+    Route::post("/dashboard/submit/delete/", "destroy")->name("dashboard.delete.post");
+
+
+    // Route::post("/dashboard/submit/delete/", "destroy2")->name("dashboard.delete.post2");
 });
 

@@ -38,7 +38,12 @@ class AdminController extends Controller
         // dd($b);
 
         $adminData = Admin::with("address")->paginate(10);
-        return view("admin.dashboard2", compact("adminData"));
+        /* `dd(->all());` is a debugging statement in PHP that stands for "Dump and Die". It is
+        used to dump the contents of the `` object, which represents the incoming request, and
+        then halt the execution of the script. This statement is commonly used to inspect the data
+        being sent in the request during development and debugging to understand the structure and
+        values of the request data. */
+        return view("admin.dashboard", compact("adminData"));
     }
 
     /**
@@ -326,7 +331,7 @@ class AdminController extends Controller
 
         $id = $req->input("user_id");
 
-        
+
         $admin = Admin::findOrFail($id);
 
         $address = Address::where("user_id", $admin->admin_id)->get();
@@ -347,7 +352,7 @@ class AdminController extends Controller
             $address[0]->delete();
         }
 
-       $a= $admin->delete();
+        $a = $admin->delete();
 
         // $status["msg"] = "DATA HAS BEEN DELETE";
         // $status["error"] = 0;
@@ -363,6 +368,8 @@ class AdminController extends Controller
     }
     public function destroy(Request $req, string $id = null)
     {
+        // dd($req->all());
+        $id = $req->input("user_id");
         $admin = Admin::findOrFail($id);
 
         $address = Address::where("user_id", $admin->admin_id)->get();

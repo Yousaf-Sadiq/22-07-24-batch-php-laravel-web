@@ -185,12 +185,18 @@
 
                     let formData = new FormData(delete_form);
 
-                    let url = document.querySelector("#abc").value;
+
+                    for (let [key, value] of formData.entries()) {
+                        console.log(`${key}: ${value}`);
+                    }
+
+                    // let url = document.querySelector("#abc").value;
+                    let url = "{{ route('dashboard.delete.post') }}";
 
 
                     let opt = {
                         method: "POST",
-                        Body: formData,
+                        body: formData,
                         headers: {
                             'X-CSRF-TOKEN': token
                         }
