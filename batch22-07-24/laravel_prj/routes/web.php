@@ -33,5 +33,10 @@ Route::prefix("admin")->controller(AdminController::class)->group(function () {
     //  upload file
 
     Route::post("/uploads", "upload")->name("upload.admin");
+
+
+    // delete route
+    Route::post("/dashboard/submit/delete/{id}", "destroy")->name("dashboard.delete.post");
+    Route::post("/dashboard/submit/delete/", "destroy2")->name("dashboard.delete.post2");
 });
 

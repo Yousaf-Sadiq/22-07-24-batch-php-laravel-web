@@ -38,7 +38,7 @@ class AdminController extends Controller
         // dd($b);
 
         $adminData = Admin::with("address")->paginate(10);
-        return view("admin.dashboard", compact("adminData"));
+        return view("admin.dashboard2", compact("adminData"));
     }
 
     /**
@@ -318,8 +318,74 @@ class AdminController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+
+
+    public function destroy2(Request $req, string $id = null)
     {
-        //
+
+
+        $id = $req->input("user_id");
+
+        
+        $admin = Admin::findOrFail($id);
+
+        $address = Address::where("user_id", $admin->admin_id)->get();
+
+
+        if (count($address) > 0) {
+
+            if (isset($address["image"]) && !empty($address["image"])) {
+
+                $img = public_path($address["image"]);
+
+                if (File::exists($img)) {
+                    File::delete($img);
+                }
+            }
+
+
+            $address[0]->delete();
+        }
+
+       $a= $admin->delete();
+
+        // $status["msg"] = "DATA HAS BEEN DELETE";
+        // $status["error"] = 0;
+        // return response()->json($status);
+
+
+        if ($a) {
+            return redirect()->route("admin.dashboard")->with("success", "DATA HAS BEEN DELETED");
+        } else {
+            return redirect()->route("admin.dashboard")->with("error", "DELETED ERROR");
+        }
+
+    }
+    public function destroy(Request $req, string $id = null)
+    {
+        $admin = Admin::findOrFail($id);
+
+        $address = Address::where("user_id", $admin->admin_id)->get();
+        if (count($address) > 0) {
+
+            if (isset($address["image"]) && !empty($address["image"])) {
+
+                $img = public_path($address["image"]);
+
+                if (File::exists($img)) {
+                    File::delete($img);
+                }
+            }
+
+
+            $address[0]->delete();
+        }
+
+        $admin->delete();
+
+        $status["msg"] = "DATA HAS BEEN DELETE";
+        $status["error"] = 0;
+        return response()->json($status);
+
     }
 }

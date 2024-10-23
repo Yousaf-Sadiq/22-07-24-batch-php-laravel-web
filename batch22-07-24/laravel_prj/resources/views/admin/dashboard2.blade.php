@@ -111,15 +111,11 @@
                             <a href="{{ route('admin.dashboard.update', $data->admin_id) }}" class="btn btn-md btn-info">
                                 update</a>
 
+                            <a href="javascript:void(0)" onclick="OnDelete('{{ $data->admin_id }}')"
+                                class="btn btn-md btn-danger">
+                                DELETE</a>
 
-                            <form id="delete_form">
-                                @csrf
-                                <input type="hidden" value="{{ $data->admin_id }}" name="user_id">
-                                <input type="hidden" id="abc"
-                                    value="{{ route('dashboard.delete.post', $data->admin_id) }}">
-                                <button type="submit" class="btn btn-md btn-danger">
-                                    DELETE</button>
-                            </form>
+
 
                         </td>
                     </tr>
@@ -129,6 +125,35 @@
             </tbody>
 
         </table>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="delete_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h1>ARE YOU SURE <span class="text-danger">!</span> </h1>
+                    </div>
+                    <div class="modal-footer">
+                        <form action="{{ route('dashboard.delete.post2') }}" method="post">
+                            @csrf
+
+                            <input type="text" name="user_id" id="user_id">
+
+                            <button type="submit" class="btn btn-primary">Understood</button>
+                        </form>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
         {{-- http://127.0.0.1:8000/admin/dashboard?page=2 --}}
         {{ $adminData->links('pagination::myPagination') }}
     </div>
@@ -136,101 +161,14 @@
 
 @section('admin_script')
     <script>
-        let delete_form = document.querySelector("#delete_form");
+        function OnDelete(id) {
 
-        delete_form.addEventListener("submit", function(e) {
-            e.preventDefault();
+            let delete_modal = document.querySelector("#delete_modal");
+            const myModal = new bootstrap.Modal(delete_modal)
+            myModal.show(delete_modal)
 
-            OnDelete()
-
-        })
-
-
-
-
-
-
-        function OnDelete() {
-
-
-            const swalWithBootstrapButtons = Swal.mixin({
-                customClass: {
-                    confirmButton: "btn btn-success",
-                    cancelButton: "btn btn-danger"
-                },
-                buttonsStyling: false
-            });
-
-            swalWithBootstrapButtons.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Yes, delete it!",
-                cancelButtonText: "No, cancel!",
-                reverseButtons: true
-            }).then((result) => {
-
-                if (result.isConfirmed) {
-
-
-
-
-
-                    let meta = document.querySelector("meta[name='csrf-token']");
-
-                    let token = meta.getAttribute("content")
-
-                    let delete_form = document.querySelector("#delete_form");
-
-                    let formData = new FormData(delete_form);
-
-                    let url = document.querySelector("#abc").value;
-
-
-                    let opt = {
-                        method: "POST",
-                        Body: formData,
-                        headers: {
-                            'X-CSRF-TOKEN': token
-                        }
-                    }
-
-
-
-
-
-                    if (AJAX(url, opt)) {
-                        swalWithBootstrapButtons.fire({
-                            title: "Deleted!",
-                            text: "DATA HAS BEEN DELETE",
-                            icon: "success"
-                        });
-
-                        setTimeout(() => {
-                            location.reload()
-                        }, 1000);
-                    } else {
-                        swalWithBootstrapButtons.fire({
-                            title: "ERROR",
-                            text: "DELETE ERROR",
-                            icon: "error"
-                        });
-                    }
-
-
-
-                } else if (
-                    /* Read more about handling dismissals below */
-                    result.dismiss === Swal.DismissReason.cancel
-                ) {
-                    swalWithBootstrapButtons.fire({
-                        title: "Cancelled",
-                        text: "Your imaginary file is safe :)",
-                        icon: "error"
-                    });
-                }
-            });
+            let user_id = document.querySelector("#user_id");
+            user_id.value = id
 
         }
     </script>

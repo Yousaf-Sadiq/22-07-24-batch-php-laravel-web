@@ -7,6 +7,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('admin_title')</title>
     <!--favicon-->
     <link rel="icon" href="{{ asset('admin/assets/images/favicon-32x32.png') }} " type="image/png">
@@ -38,7 +39,7 @@
     @include('layout.admin.components._sidebar')
     <main class="main-wrapper">
         <div class="main-content">
-            @include("screen.common.messege")
+            @include('screen.common.messege')
             @yield('admin_content')
         </div>
     </main>
@@ -72,9 +73,23 @@
     </script>
     <script src="{{ asset('admin/assets/plugins/simplebar/js/simplebar.min.js') }}"></script>
     <script src="{{ asset('admin/assets/js/main.js') }}"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @yield('admin_script')
+    <script>
+        async function AJAX(url, opt) {
 
+            let data = await fetch(url, opt);
+
+
+            let res = await data.json();
+
+            if (res.error > 0) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+    </script>
 </body>
 
 
