@@ -6,18 +6,21 @@ use App\Models\Address;
 use App\Models\Admin;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
 
+
 class AdminController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function OldIndex()
     {
         // $adminData = Admin::paginate(10);
 
@@ -45,6 +48,197 @@ class AdminController extends Controller
         values of the request data. */
         return view("admin.dashboard", compact("adminData"));
     }
+
+
+
+    public function signup()
+    {
+        // dd(Auth::guard("admin")->user());
+        if (Auth::guard("admin")->check()) {
+
+            return redirect()->route("admin.dashboard")->with("error", "you already login or registered");
+        } else {
+            return view("auth.admin.register");
+        }
+
+
+    }
+
+    public function login()
+    {
+        if (Auth::guard("admin")->check()) {
+
+            return redirect()->route("admin.dashboard")->with("error", "you already login or registered");
+        } else {
+            return view("auth.admin.login");
+        }
+    }
+
+
+
+
+
+    public function login_submit(Request $request)
+    {
+        $rules = [
+
+
+            "Email" => "required|email",
+
+            "pswd" => "required|between:1,8|string"
+        ];
+        $customMessage = [
+
+
+            "Email.required" => "EMAIL IS REQUIRED",
+            "Email.email" => "EMAIL FORMAT INVALID",
+
+
+
+            "pswd.required" => "PASSWORD IS REQUIRED",
+            "pswd.between" => "PASSWORD MUST BETWEEN 1 to 8 "
+        ];
+
+
+        $request->validate($rules, $customMessage);
+
+
+        $email = $request->input("Email");
+
+        $pswd = $request->input("pswd");
+
+
+        $data = [
+            "email" => $email,
+            "password" => $pswd
+        ];
+
+        if (Auth::guard("admin")->attempt($data)) {
+
+            return redirect()->route("admin.dashboard")->with("success", "LOGIN SUCCESSFULL");
+        } else {
+            return redirect()->route("login.get")->with("error", "YOU ARE NOT REGISTERED IN OUR PORTAL");
+        }
+
+
+
+
+
+    }
+
+
+    public function logouts()
+    {
+        Auth::guard("admin")->logout();
+        // Auth::guard("admin")->
+        return redirect()->route("login.get")->with("success", "LOGOUT SUCCESSFULL");
+
+    }
+
+
+    public function signup_submit(Request $request)
+    {
+
+        $rules = [
+            "user_name" => "required|string",
+
+            "Email" => "required|email|unique:admins,email",
+
+            "pswd" => "required|between:1,8|string"
+        ];
+        $customMessage = [
+            "user_name.required" => "USER NAME IS REQUIRED",
+            // "user_name.between" =    > "USER NAME MUST BETWEEN 1 to 6 CHARACTOR",
+
+
+            "Email.required" => "EMAIL IS REQUIRED",
+            "Email.email" => "EMAIL FORMAT INVALID",
+            "Email.unique" => "EMAIL ALREADY EXIST",
+
+
+            "pswd.required" => "PASSWORD IS REQUIRED",
+            "pswd.between" => "PASSWORD MUST BETWEEN 1 to 8 "
+        ];
+
+
+        $request->validate($rules, $customMessage);
+
+
+        $email = $request->input("Email");
+        $user_name = $request->input("user_name");
+        $pswd = $request->input("pswd");
+
+        // $email=$request->Email;
+
+
+
+
+
+        $hashed = Hash::make($pswd);
+        $encrypt = Crypt::encrypt($pswd);
+
+
+
+        $data = [
+            "Username" => $user_name,
+            "email" => $email,
+            "password" => $hashed,
+            "ptoken" => $encrypt
+        ];
+
+        $admin = Admin::create($data);
+
+
+        if ($admin) {
+
+            $auth = [
+                "email" => $email,
+                "password" => $pswd
+            ];
+
+            // dd($auth);
+            if (Auth::guard("admin")->attempt($auth)) {
+
+
+                return redirect()->route("admin.dashboard")->with("success", "DATA HAS BEEN INSERTED");
+            } else {
+                return redirect()->route("register.get")->with("error", "REGISTER ERROR");
+            }
+
+
+
+        } else {
+            return redirect()->route("admin.dashboard")->with("error", "INSERTION ERROR");
+        }
+
+    }
+
+    public function index()
+    {
+        $adminAuth = Auth::guard("admin");
+
+
+
+
+        // dd($admin);
+
+        if ($adminAuth->check()) {
+
+            $adminData = Admin::where("admin_id", $adminAuth->user()->admin_id)->
+                with("address")
+                ->paginate(10);
+
+            return view("admin.dashboard", compact("adminData"));
+        } else {
+            return redirect()->route("login.get")->with("error", "PLEASE LOGIN OR REGISTER");
+        }
+
+
+    }
+
+
+
+
 
     /**
      * Show the form for creating a new resource.

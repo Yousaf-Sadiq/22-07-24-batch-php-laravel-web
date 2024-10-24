@@ -186,9 +186,9 @@
                     let formData = new FormData(delete_form);
 
 
-                    for (let [key, value] of formData.entries()) {
-                        console.log(`${key}: ${value}`);
-                    }
+                    // for (let [key, value] of formData.entries()) {
+                    //     console.log(`${key}: ${value}`);
+                    // }
 
                     // let url = document.querySelector("#abc").value;
                     let url = "{{ route('dashboard.delete.post') }}";

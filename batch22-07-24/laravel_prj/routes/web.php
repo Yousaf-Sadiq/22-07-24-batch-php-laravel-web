@@ -17,29 +17,22 @@ use Illuminate\Support\Facades\Route;
 Route::prefix("admin")->controller(AdminController::class)->group(function () {
 
 
-    Route::get('/dashboard', "index")->name("admin.dashboard");
-    Route::post('/dashboard/submit', "store")->name("admin.dashboard.post");
-
-    // update
-    Route::get('/dashboard/update/{id}', "show")
-        ->name("admin.dashboard.update")
-        ->whereNumber("id");
-
-
-    Route::post('/dashboard/update/submit', "update")->name("admin.dashboard.update.post");
-
-
-
-    //  upload file
-
-    Route::post("/uploads", "upload")->name("upload.admin");
-
-
-    // delete route
-    // Route::post("/dashboard/submit/delete/{id}", "destroy")->name("dashboard.delete.post");
-    Route::post("/dashboard/submit/delete/", "destroy")->name("dashboard.delete.post");
-
+    include_once __DIR__ . "/admin.php";
 
     // Route::post("/dashboard/submit/delete/", "destroy2")->name("dashboard.delete.post2");
+
+    // auth Route
+
+    Route::get("register", "signup")->name("register.get");
+    Route::post("register/submit", "signup_submit")->name("register.post");
+
+
+    // login
+    Route::get("login", "login")->name("login.get");
+    Route::post("login/submit", "login_submit")->name("login.post");
+
+    Route::get("logout", "logouts")->name("logout.admin.get");
 });
+
+
 
